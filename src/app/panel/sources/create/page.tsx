@@ -30,6 +30,16 @@ export default function CreateSourcePage() {
         >
           <FormInput control={control} name="name" label="Source Name" />
           <FormInput control={control} name="link" label="Source Link" />
+          <FormInput
+            control={control}
+            name="hrefSelector"
+            label="Href selector"
+          />
+          <FormInput
+            control={control}
+            name="titleSelector"
+            label="Title selector"
+          />
           <div className="col-span-2 flex justify-end">
             <Button type="submit">Create Source</Button>
           </div>
