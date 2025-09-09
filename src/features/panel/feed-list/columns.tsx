@@ -23,7 +23,9 @@ export const columns: (props: {
             alt={row.original.source.name}
             className="w-10 h-10"
           />
-          <span>{row.original.source.name}</span>
+          <div className="grid">
+            <span className="line-clamp-1">{row.original.source.name}</span>
+          </div>
         </div>
       );
     },
@@ -31,6 +33,14 @@ export const columns: (props: {
   {
     accessorKey: "title",
     header: "Title",
+    cell: ({ row }) => {
+      return (
+        <div
+          dangerouslySetInnerHTML={{ __html: row.original.title }}
+          className="line-clamp-2"
+        />
+      );
+    },
   },
   {
     accessorKey: "publishDate",
@@ -56,17 +66,19 @@ export const columns: (props: {
     accessorKey: "readCount",
     header: "Operations",
     cell: ({ row }) => {
-      return row.original.readCount > 0 ? (
-        <Check className="w-6 h-6" />
-      ) : (
+      return (
         <div className="flex items-center gap-2">
-          <Button
-            onClick={() =>
-              props.increaseReadCount({ feedId: row.original._id })
-            }
-          >
-            Read it right now
-          </Button>
+          {row.original.readCount > 0 ? (
+            <Check className="w-6 h-6" />
+          ) : (
+            <Button
+              onClick={() =>
+                props.increaseReadCount({ feedId: row.original._id })
+              }
+            >
+              Read it right now
+            </Button>
+          )}
           <Button
             variant="outline"
             onClick={() => props.notInterested({ feedId: row.original._id })}

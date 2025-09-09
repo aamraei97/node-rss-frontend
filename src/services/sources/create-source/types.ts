@@ -3,6 +3,8 @@ export type CreateSourceRequestType = {
   url: string;
   hrefSelector: string;
   titleSelector: string;
+  timeSelector: string;
+  type: "low" | "medium" | "high" | "very-high";
 };
 
 export type CreateSourceResponseType = {

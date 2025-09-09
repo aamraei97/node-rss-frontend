@@ -4,12 +4,16 @@ import { Button } from "@/components/ui/button";
 import { useCreateSource } from "@/services/sources/create-source";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { FormSelect } from "@/components/modules/form/select";
 
 export default function CreateSourcePage() {
   const { control, handleSubmit } = useForm();
+  const router = useRouter();
   const { mutate: createSource, isPending } = useCreateSource({
     onSuccess: () => {
       toast.success("Source created successfully");
+      router.push("/panel/sources");
     },
     onError: () => {
       toast.error("Failed to create source");
@@ -40,8 +44,26 @@ export default function CreateSourcePage() {
             name="titleSelector"
             label="Title selector"
           />
+          <FormInput
+            control={control}
+            name="timeSelector"
+            label="Time selector"
+          />
+          <FormSelect
+            control={control}
+            name="sourceCredibility"
+            label="Source Credibility"
+            options={[
+              { label: "Low", value: "low" },
+              { label: "Medium", value: "medium" },
+              { label: "High", value: "high" },
+              { label: "Very High", value: "very-high" },
+            ]}
+          />
           <div className="col-span-2 flex justify-end">
-            <Button type="submit">Create Source</Button>
+            <Button type="submit" loading={isPending}>
+              Create Source
+            </Button>
           </div>
         </form>
       </div>
