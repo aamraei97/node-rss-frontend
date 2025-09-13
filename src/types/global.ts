@@ -14,3 +14,7 @@ export type Source = {
   link: string;
   sourceCredibility: "low" | "medium" | "high" | "very-high";
 };
+export type Tag = {
+  _id: string;
+  name: string;
+};

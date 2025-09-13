@@ -15,6 +15,7 @@ export const columns: (props: {
   {
     accessorKey: "source",
     header: "Source",
+
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-2">
@@ -35,10 +36,13 @@ export const columns: (props: {
     header: "Title",
     cell: ({ row }) => {
       return (
-        <div
-          dangerouslySetInnerHTML={{ __html: row.original.title }}
-          className="line-clamp-2"
-        />
+        <div className="flex flex-col">
+          <div
+            dangerouslySetInnerHTML={{ __html: row.original.title }}
+            className="line-clamp-1 max-w-[500px]"
+          />
+        </div>
+
       );
     },
   },

@@ -14,32 +14,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function SourcesTable<TData, TValue>({
+export function TagsTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [pagination, setPagination] = useState({
-    pageSize: 50,
-    pageIndex: 0,
-  });
   const table = useReactTable({
     data,
     columns,
-    state: {
-      pagination: {
-        pageSize: pagination.pageSize,
-        pageIndex: pagination.pageIndex,
-      }
-    },
     getCoreRowModel: getCoreRowModel(),
-    onPaginationChange: setPagination,
   });
 
   return (
@@ -69,9 +57,6 @@ export function SourcesTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className={cn(
-                  (row.getValue("readCount") as number) > 0 && "bg-blue-500/10"
-                )}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>

@@ -28,7 +28,7 @@ const buttonVariants = cva(
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-12 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-20 rounded-md px-6 has-[>svg]:px-4",
+        lg: "h-14 px-6 has-[>svg]:px-4",
         icon: "size-10",
       },
     },
@@ -66,7 +66,9 @@ function Button({
     >
       {loading && (
         <Loader2
-          className="animate-spin absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white"
+          className={cn("animate-spin absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white",
+            variant === "outline" && "text-black"
+          )}
           aria-hidden="true"
         />
       )}

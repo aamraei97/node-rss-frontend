@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectContent,
   SelectGroup,
+  SelectLabel,
 } from "@/components/ui/select";
 import {
   Control,
@@ -13,13 +14,15 @@ import {
   Path,
   useController,
 } from "react-hook-form";
+
+type optionType = | { label: string; value: string, image?: string }[]
+  | readonly { label: string; value: string, image?: string }[]
 type SelectProps<T extends FieldValues> = React.ComponentProps<"select"> & {
   label: string;
   control: Control<T>;
   name: Path<T>;
-  options:
-    | { label: string; value: string }[]
-    | readonly { label: string; value: string }[];
+  options?: optionType
+  groups?: { label: string; options: optionType }[];
 };
 export function FormSelect<T extends FieldValues>({
   className,
@@ -27,6 +30,7 @@ export function FormSelect<T extends FieldValues>({
   control,
   name,
   options,
+  groups,
   ...props
 }: SelectProps<T>) {
   const {
@@ -54,13 +58,32 @@ export function FormSelect<T extends FieldValues>({
               {/* {field.value} */}
             </SelectTrigger>
             <SelectContent>
-              <SelectGroup>
-                {options.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
+              {options && (
+                <SelectGroup>
+                  {options.map((option) => (
+                    <SelectItem key={option.value} value={option.value} className="flex items-center gap-2">
+                      {option.image && <img src={option.image} alt={option.label} className="w-4 h-4 " />}
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              )}
+              {groups &&
+                groups.map((group) => (
+                  <SelectGroup key={group.label} >
+                    <>
+                      <SelectLabel>{group.label}</SelectLabel>
+                      {group.options.map((option) => (
+                        <SelectItem key={option.value} value={option.value} className="flex items-center gap-2">
+                          {option.image && <img src={option.image} alt={option.label} className="w-6 h-6 " />}
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </>
+
+                  </SelectGroup>
+                ))
+              }
             </SelectContent>
           </Select>
         )}
