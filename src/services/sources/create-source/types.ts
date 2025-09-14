@@ -5,6 +5,7 @@ export type CreateSourceRequestType = {
   titleSelector: string;
   timeSelector: string;
   type: "low" | "medium" | "high" | "very-high";
+  tags?: string[];
 };
 
 export type CreateSourceResponseType = {
