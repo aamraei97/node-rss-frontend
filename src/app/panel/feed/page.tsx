@@ -1,5 +1,6 @@
 "use client";
 
+import { FormInput } from "@/components/modules/form/input";
 import { FormSelect } from "@/components/modules/form/select";
 import { Button } from "@/components/ui/button";
 import { columns } from "@/features/panel/feed-list/columns";
@@ -20,14 +21,19 @@ export default function FeedPage() {
   const [filters, setFilters] = useState<any>({});
   const { data } = useGetFeed({ params: filters });
   const { data: sources } = useGetSources();
-  const groupSourcesBySourceCredibility = sources?.result.reduce((acc, source) => {
-    acc[source.sourceCredibility] = acc[source.sourceCredibility] || [];
-    acc[source.sourceCredibility].push({ ...source, image: source.favicon });
+  const groupSourcesBySourceCredibility = sources?.result.reduce(
+    (acc, source) => {
+      acc[source.sourceCredibility] = acc[source.sourceCredibility] || [];
+      acc[source.sourceCredibility].push({ ...source, image: source.favicon });
 
-    // order by name
-    acc[source.sourceCredibility].sort((a, b) => a.name.localeCompare(b.name));
-    return acc;
-  }, {} as Record<string, any[]>);
+      // order by name
+      acc[source.sourceCredibility].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+      return acc;
+    },
+    {} as Record<string, any[]>
+  );
   const { mutate: increaseReadCount } = useIncreaseReadCount({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get-feed"] });
@@ -54,23 +60,41 @@ export default function FeedPage() {
   return (
     <div className="flex flex-col gap-4">
       <div className="grid">
-        <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="grid grid-cols-4 gap-4"
+        >
           <FormSelect
             control={control}
             name="sourceId"
             label="Source"
-            groups={Object.entries(groupSourcesBySourceCredibility || {}).map(([key, value]) => ({ label: key, options: value.map((source) => ({ label: source.name, value: source._id, image: source.image })) }))}
-
+            groups={Object.entries(groupSourcesBySourceCredibility || {}).map(
+              ([key, value]) => ({
+                label: key,
+                options: value.map((source) => ({
+                  label: source.name,
+                  value: source._id,
+                  image: source.image,
+                })),
+              })
+            )}
+          />
+          <FormInput
+            control={control}
+            name="title"
+            label="Title"
+            placeholder="Title"
           />
           <div className="col-span-4">
-            <Button type="submit" size="lg">Search</Button>
+            <Button type="submit" size="lg">
+              Search
+            </Button>
           </div>
         </form>
       </div>
       <FeedTable<Feed, any>
         columns={columnWithMutations}
         data={data?.results || []}
-
       />
     </div>
   );
