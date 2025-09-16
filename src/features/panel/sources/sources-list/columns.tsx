@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { LinkIcon } from "lucide-react";
 import { PopulateFeedRequestType } from "@/services/sources/populate-feed/types";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 export const columns: (props: {
   populateFeed: (args: PopulateFeedRequestType) => void;
@@ -40,7 +42,7 @@ export const columns: (props: {
     header: "Last Crawl",
     cell: ({ row }) => {
       return row.original.lastCrawl
-        ? dayjs(row.original.lastCrawl).format("YYYY-MM-DD HH:mm")
+        ? dayjs(row.original.lastCrawl).fromNow()
         : "N/A";
     },
   },
