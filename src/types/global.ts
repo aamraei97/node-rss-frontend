@@ -12,6 +12,7 @@ export type Source = {
   favicon: string;
   lastCrawl: string;
   link: string;
+  feedCount: number;
   sourceCredibility: "low" | "medium" | "high" | "very-high";
 };
 export type Tag = {
