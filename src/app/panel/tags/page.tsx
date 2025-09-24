@@ -10,8 +10,6 @@ import Link from "next/link";
 export default function TagsPage() {
   const { data } = useGetTags();
 
-
-  const columnWithMutations = columns({});
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-end">
@@ -19,10 +17,19 @@ export default function TagsPage() {
           <Button>Create Tag</Button>
         </Link>
       </div>
-      <TagsTable<Tag, any>
-        columns={columnWithMutations}
-        data={data?.result || []}
-      />
+
+      {data?.result && data?.result.length > 0 && (
+        <div className="flex flex-wrap gap-1">
+          {data?.result.map((tag) => (
+            <div
+              className="bg-white py-1.5 px-4 rounded-md border border-gray-200 hover:border-gray-300 transition-all duration-300"
+              key={tag._id}
+            >
+              <span>{tag.name}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

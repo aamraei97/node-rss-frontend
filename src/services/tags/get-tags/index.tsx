@@ -5,7 +5,7 @@ import { http } from "@/services/http";
 import { GetTagsRequestType, GetTagsResponseType } from "./types";
 
 async function getTags(req: GetTagsRequestType | undefined) {
-  const res = await http.get<GetTagsResponseType>("/v1/panel/tags", {
+  const res = await http.get<GetTagsResponseType>("/v1/admin/tags", {
     params: req,
   });
   return res.data;

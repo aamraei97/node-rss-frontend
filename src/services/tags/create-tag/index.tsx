@@ -6,7 +6,7 @@ import { http } from "@/services/http";
 import { AxiosResponse } from "axios";
 
 async function createTag(args: CreateTagRequestType) {
-  return await http.post<CreateTagResponseType>(`/v1/panel/tags`, args);
+  return await http.post<CreateTagResponseType>(`/v1/admin/tags`, args);
 }
 
 export function useCreateTag(
