@@ -45,11 +45,6 @@ export default function FeedPage() {
     },
   });
 
-  const columnWithMutations = columns({
-    populateFeed: populateFeed.mutate,
-    populateFeedLoading: populateFeed.isPending,
-    populateFeedId: populateFeed.variables?.sourceId || "",
-  });
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-end">

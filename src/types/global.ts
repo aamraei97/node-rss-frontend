@@ -5,6 +5,7 @@ export type Feed = {
   publishedAt: string;
   source: Source;
   readCount: number;
+  lastReadAt?: string;
 };
 export type Source = {
   _id: string;

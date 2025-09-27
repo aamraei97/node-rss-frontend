@@ -8,7 +8,6 @@ export type GetFeedRequestType = {
 };
 
 export type GetFeedResponseType = {
-  results: Feed[];
-  total_page: number;
-  current_page: number;
+  data: Feed[];
+  totalCount: number;
 };
