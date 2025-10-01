@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { isImage } from "@/utils/functions";
+// import { isImage } from "@/utils/functions";
 import { UploadIcon } from "lucide-react";
 import { useRef } from "react";
 import {
@@ -31,9 +31,9 @@ export function FormUpload<T extends FieldValues>({
   let isImageBasedOnExtension = false;
   if (field.value) {
     if (field.value?.type) {
-      isImageBasedOnExtension = isImage(field.value.name);
+      // isImageBasedOnExtension = isImage(field.value.name);
     } else {
-      isImageBasedOnExtension = isImage(field.value);
+      // isImageBasedOnExtension = isImage(field.value);
     }
   }
   let selectedFileName = null;
