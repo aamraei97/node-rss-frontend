@@ -5,6 +5,6 @@ export type SendOtpToEmailRequestType = {
 export type SendOtpToEmailResponseType = {
   message: string;
   result: {
-    step: "otp";
+    step: "otp" | "password";
   };
 };

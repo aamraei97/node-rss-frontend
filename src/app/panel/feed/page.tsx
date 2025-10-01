@@ -6,13 +6,11 @@ import { FormSelect } from "@/components/modules/form/select";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useGetFeed } from "@/services/feed/get-feed";
-import { useIncreaseReadCount } from "@/services/feed/increase-read-count";
 import { useGetSources } from "@/services/sources/get-sources";
 import { useQueryClient } from "@tanstack/react-query";
 import { Info } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 
 export default function FeedPage() {
   const { control, handleSubmit, reset } = useForm();
@@ -40,15 +38,6 @@ export default function FeedPage() {
     },
     {} as Record<string, any[]>
   );
-  const { mutate: increaseReadCount } = useIncreaseReadCount({
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["get-feed"] });
-      toast.success("Well done!");
-    },
-    onError: () => {
-      toast.error("Something went wrong");
-    },
-  });
 
   const onSubmit = (data: any) => {
     console.log({ data });

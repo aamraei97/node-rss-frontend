@@ -32,6 +32,9 @@ export function EnterEmail({ onChangeStep }: Props) {
       if (res?.data?.result?.step === "otp") {
         onChangeStep({ step: "enter-otp", email: getValues("email") });
       }
+      if (res?.data?.result?.step === "password") {
+        onChangeStep({ step: "password", email: getValues("email") });
+      }
     },
   });
 
@@ -51,15 +54,6 @@ export function EnterEmail({ onChangeStep }: Props) {
         <Button type="submit" className="mt-8" loading={isPending}>
           Send OTP
         </Button>
-        <span className="text-sm text-gray-500">
-          Already have an account?{" "}
-          <Link
-            className="underline underline-offset-5 text-red-500  transition-all duration-300 font-medium"
-            href="/login"
-          >
-            Login
-          </Link>
-        </span>
       </div>
     </form>
   );

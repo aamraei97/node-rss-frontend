@@ -24,8 +24,19 @@ const SetPassword = dynamic(
     ssr: false,
   }
 );
+const EnterPassword = dynamic(
+  () =>
+    import("@/features/auth/enter-password").then((mod) => mod.EnterPassword),
+  {
+    ssr: false,
+  }
+);
 
-export type AuthRegisterSteps = "enter-email" | "enter-otp" | "set-password";
+export type AuthRegisterSteps =
+  | "enter-email"
+  | "enter-otp"
+  | "set-password"
+  | "password";
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -49,6 +60,7 @@ export default function RegisterPage() {
       />
     ),
     "set-password": <SetPassword email={email} otp={otp} />,
+    password: <EnterPassword email={email} />,
   };
   return (
     <div className="bg-white rounded-xl p-6 shadow w-[450px]">
