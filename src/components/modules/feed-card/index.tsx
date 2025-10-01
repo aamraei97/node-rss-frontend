@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useIncreaseReadCount } from "@/services/feed/increase-read-count";
 import { useNotInterested } from "@/services/feed/not-interested";
 import { Feed } from "@/types/global";
 import { useQueryClient } from "@tanstack/react-query";
@@ -6,15 +7,12 @@ import dayjs from "dayjs";
 import { Clock, Trash } from "lucide-react";
 import { toast } from "sonner";
 
-export function FeedCard({
-  feed,
-  isRead,
-  onRemove,
-}: {
+type Props = {
   feed: Feed;
   isRead?: boolean;
   onRemove?: (feedId: string) => void;
-}) {
+};
+export function FeedCard({ feed, isRead, onRemove }: Props) {
   const queryClient = useQueryClient();
   const { mutate: notInterested, isPending } = useNotInterested({
     onSuccess: () => {
@@ -26,6 +24,16 @@ export function FeedCard({
       toast.error("Something went wrong");
     },
   });
+  const { mutate: increaseReadCount, isPending: isIncreaseReadCountPending } =
+    useIncreaseReadCount({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["get-feed"] });
+        toast.success("Well read!");
+      },
+      onError: () => {
+        toast.error("Something went wrong");
+      },
+    });
   return (
     <div className="bg-white border border-gray-200 rounded-lg grid">
       <div className="flex items-center gap-2 justify-between p-3">
@@ -33,6 +41,14 @@ export function FeedCard({
           <h3 className="text-lg font-medium">{feed.title}</h3>
         </a>
         <div className="flex items-center justify-between gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            loading={isIncreaseReadCountPending}
+            onClick={() => increaseReadCount({ feedId: feed._id })}
+          >
+            Read
+          </Button>
           <Button
             variant="outline"
             size="icon-sm"
